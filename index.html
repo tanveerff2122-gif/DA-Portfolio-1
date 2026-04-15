@@ -37,7 +37,7 @@
       --bg:          #ffffff;          
       --bg-2:        #f8fafc;          
       --bg-3:        #ffffff;          
-      --gold:        #b8901a; /* Slightly darker gold for better contrast on white */         
+      --gold:        #b8901a;         
       --gold-light:  #d4af37;
       --gold-dim:    rgba(212, 175, 55, 0.15);
       --text:        #0f172a;          
@@ -70,7 +70,7 @@
       line-height: 1.8;
       letter-spacing: 0.5px;
       overflow-x: hidden;
-      transition: background-color 0.4s ease, color 0.4s ease; /* Smooth theme switch */
+      transition: background-color 0.4s ease, color 0.4s ease;
     }
     ::selection { background: var(--gold); color: #fff; }
     a { color: inherit; text-decoration: none; }
@@ -1028,13 +1028,14 @@
             <p>${project.customTools}</p>
           `;
 
-          // Custom Buttons - Hide primary, update outline button text
+          // Custom Buttons
           modalLiveLink.style.display = "none";
           modalRepoLink.textContent = "View GitHub →";
           
         } else if (projectId === "Project 03") {
-          // Hide default top image container to match P1 and P2 style
-          imageContainer.style.display = "none";
+          // Project 3 Ke Liye Top Image Container Show Karein (As Requested)
+          imageContainer.style.display = "block";
+          modalImage.src = project.image; // "images/churn_bg.png" set kiya gaya hai
 
           const datasetHTML = project.dataset.map(d => `<li>${d}</li>`).join('');
           const metricsHTML = project.metrics.map(m => `<li>${m}</li>`).join('');
@@ -1042,11 +1043,9 @@
           const insightsHTML = project.insights.map(i => `<li>${i}</li>`).join('');
           const toolsHTML = project.toolsList.map(t => `<li>${t}</li>`).join('');
           
-          // Inject custom layout into the modal body
+          // Inject custom layout into the modal body without inline image
           modalDesc.innerHTML = `
             <p class='modal-short-desc'>${project.overview}</p>
-
-            <img src="${project.image}" alt="Churn Dashboard Preview" style="width: 100%; border-radius: 12px; margin-bottom: 2.5rem; border: 1px solid var(--border-dim); box-shadow: 0 8px 25px rgba(0,0,0,0.3), 0 0 15px rgba(212, 175, 55, 0.08);" />
 
             <h4>Dataset Information</h4>
             <ul>${datasetHTML}</ul>
