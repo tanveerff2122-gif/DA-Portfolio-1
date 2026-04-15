@@ -799,7 +799,7 @@
         ],
         livelink: "#",
         repolink: "https://github.com/tanveerff2122-gif/Churn-Analysis",
-        visualTemplate: `<img src="images/churn_bg.png" alt="Churn Dashboard Background" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0.6; mix-blend-mode: luminosity;">`
+        visualTemplate: `<img src="images/churn_bg.png" alt="Churn Dashboard Background" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0.8;">`
       },
       {
         id: "Project 04",
@@ -1033,7 +1033,7 @@
           modalRepoLink.textContent = "View GitHub →";
           
         } else if (projectId === "Project 03") {
-          // Project 3 Ke Liye Top Image Container Show Karein (Aur direct hardcode image link lagaye)
+          // STRICT FIX: Force top image container to show the specific image
           imageContainer.style.display = "block";
           modalImage.src = "images/churn_bg.png"; 
 
@@ -1043,7 +1043,6 @@
           const insightsHTML = project.insights.map(i => `<li>${i}</li>`).join('');
           const toolsHTML = project.toolsList.map(t => `<li>${t}</li>`).join('');
           
-          // Inject custom layout into the modal body without inline image
           modalDesc.innerHTML = `
             <p class='modal-short-desc'>${project.overview}</p>
 
@@ -1063,9 +1062,11 @@
             <ul>${toolsHTML}</ul>
           `;
 
-          // Apply specific button modifications for Project 3
+          // STRICT FIX: Hide the live link button entirely, format the repo button
           modalLiveLink.style.display = "none";
+          modalRepoLink.style.display = "inline-flex";
           modalRepoLink.textContent = "View GitHub";
+          modalRepoLink.href = "https://github.com/tanveerff2122-gif/Churn-Analysis";
           
         } else {
           // Restore default modal layout for other projects
