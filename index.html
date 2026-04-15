@@ -1033,9 +1033,9 @@
           modalRepoLink.textContent = "View GitHub →";
           
         } else if (projectId === "Project 03") {
-          // Project 3 Ke Liye Top Image Container Show Karein (As Requested)
+          // Project 3 Ke Liye Top Image Container Show Karein (Aur direct hardcode image link lagaye)
           imageContainer.style.display = "block";
-          modalImage.src = project.image; // "images/churn_bg.png" set kiya gaya hai
+          modalImage.src = "images/churn_bg.png"; 
 
           const datasetHTML = project.dataset.map(d => `<li>${d}</li>`).join('');
           const metricsHTML = project.metrics.map(m => `<li>${m}</li>`).join('');
