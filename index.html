@@ -252,7 +252,7 @@
     .bar { flex: 1; border-radius: 6px 6px 0 0; background: var(--gold-dim); border-top: 2px solid rgba(212,175,55,0.4); transition: background var(--transition); }
     .bar.highlight { background: rgba(212,175,55,0.3); border-top-color: var(--gold); }
     .chart-line-svg { width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
-    .project-icon { position: absolute; top: 1.5rem; right: 1.5rem; width: 45px; height: 45px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+    .project-icon { position: absolute; top: 1.5rem; right: 1.5rem; width: 45px; height: 45px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; z-index: 2;}
     
     .project-body { padding: 2rem; display: flex; flex-direction: column; flex: 1; }
     .project-number { font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.8rem; font-weight: 600; }
@@ -715,11 +715,10 @@
       {
         id: "Project 01",
         icon: "📊",
-        title: "Business Performance Dashboard", // Updated Title
+        title: "Business Performance Dashboard", 
         cardDesc: "Built an Excel-based business dashboard analyzing Profit & Loss and Market Performance to generate actionable insights.",
         metric: "Excel Dashboard",
         tools: ["Excel", "Pivot Tables", "Data Analysis"],
-        // The modal content for Project 01 is structured dynamically in the script below.
         livelink: "#", 
         repolink: "https://github.com/tanveerff2122-gif/Business-Performance-Report", 
         visualTemplate: visuals.bar
@@ -731,7 +730,6 @@
         cardDesc: "Excel dashboard analyzing sales, revenue trends, and customer behavior.",
         metric: "Excel Dashboard",
         tools: ["Excel", "Pivot Tables"],
-        // Specific keys for Project 02 custom modal structure
         overview: "Interactive Excel dashboard for analyzing sales performance, trends, and product insights.",
         keyMetrics: [
           "Revenue: $817K",
@@ -752,27 +750,56 @@
       },
       {
         id: "Project 03",
-        icon: "🎯",
-        title: "Customer Segmentation Analysis",
-        cardDesc: "Performed RFM (Recency, Frequency, Monetary) segmentation identifying distinct customer tiers to personalize campaigns.",
-        metric: "Segmented 25,000+ customers",
-        tools: ["SQL", "Excel", "RFM Analysis"],
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80",
-        problem: "Marketing was sending the same generic emails to all 25,000 customers, resulting in low open rates and wasted budget.",
+        icon: "📉",
+        title: "Churn Rate Analysis Dashboard (Power BI)",
+        modalTitle: "Churn Rate Analysis Dashboard",
+        cardDesc: "Analyzed user churn behavior in a music streaming platform using Power BI. Identified key patterns across demographics, subscription plans, devices, and streaming experience to uncover actionable insights.",
+        metric: "Analyzed ~4600 users",
+        tools: ["Power BI", "DAX", "Data Vis"],
+        imagePreview: "images/churn_bg.png",
+        overview: "This project focuses on analyzing user churn behavior in a music streaming platform using Power BI. The goal was to understand why users leave and identify patterns across demographics, subscription plans, devices, and streaming experience.",
+        dataset: [
+          "~4600 user records",
+          "Age group, gender",
+          "Subscription details (current & previous plan)",
+          "Payment methods",
+          "Device & network type",
+          "Music genre preference",
+          "Average buffering time",
+          "Churn status"
+        ],
+        metrics: [
+          "Total Users",
+          "Active Users",
+          "Churned Users",
+          "Churn Rate (%)",
+          "Churn Difference (Plan-wise)",
+          "Churn % Change"
+        ],
+        features: [
+          "KPI overview (Total, Active, Churned, Churn Rate)",
+          "Gender-wise & age group-wise churn analysis",
+          "Device & network-based churn analysis",
+          "Buffering time impact on churn",
+          "Genre-based churn insights",
+          "Subscription transition analysis"
+        ],
         insights: [
-          "The top 10% of customers ('Champions') drove nearly 35% of total sales.",
-          "Identified over 3,000 'At Risk' customers who hadn't made a purchase in 6 months.",
-          "Found that recent buyers were mostly purchasing low-ticket items."
+          "Higher buffering time increases churn probability",
+          "Premium users have better retention than free users",
+          "Network quality impacts retention significantly",
+          "Age groups show different churn behavior",
+          "Subscription transitions highlight drop-off points"
         ],
-        approach: [
-          "Wrote SQL window functions to calculate Recency, Frequency, and Monetary scores.",
-          "Grouped users into 4 distinct tiers (Champions, Loyal, At Risk, Lost).",
-          "Visualized the segments in Excel to share directly with the marketing team."
+        toolsList: [
+          "Power BI",
+          "DAX",
+          "Data Cleaning & Transformation",
+          "Data Visualization"
         ],
-        impact: "Allowed marketing to run highly targeted campaigns, boosting email open rates significantly.",
         livelink: "#",
-        repolink: "#",
-        visualTemplate: visuals.scatter
+        repolink: "https://github.com/tanveerff2122-gif/Churn-Analysis",
+        visualTemplate: `<img src="images/churn_bg.png" alt="Churn Dashboard Background" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0.6; mix-blend-mode: luminosity;">`
       },
       {
         id: "Project 04",
@@ -931,7 +958,7 @@
         modalRepoLink.style.display = "inline-flex";
         
         modalCategory.textContent = project.id;
-        modalTitle.textContent = project.title;
+        modalTitle.textContent = project.modalTitle || project.title;
         modalLiveLink.href = project.livelink || "#";
         modalRepoLink.href = project.repolink || "#";
 
@@ -1004,6 +1031,41 @@
           // Custom Buttons - Hide primary, update outline button text
           modalLiveLink.style.display = "none";
           modalRepoLink.textContent = "View GitHub →";
+          
+        } else if (projectId === "Project 03") {
+          // Keep top image container
+          imageContainer.style.display = "block";
+          modalImage.src = project.imagePreview;
+
+          const datasetHTML = project.dataset.map(d => `<li>${d}</li>`).join('');
+          const metricsHTML = project.metrics.map(m => `<li>${m}</li>`).join('');
+          const featuresHTML = project.features.map(f => `<li>${f}</li>`).join('');
+          const insightsHTML = project.insights.map(i => `<li>${i}</li>`).join('');
+          const toolsHTML = project.toolsList.map(t => `<li>${t}</li>`).join('');
+          
+          // Inject custom layout into the modal body
+          modalDesc.innerHTML = `
+            <p class='modal-short-desc'>${project.overview}</p>
+
+            <h4>Dataset Information</h4>
+            <ul>${datasetHTML}</ul>
+
+            <h4>Key Metrics</h4>
+            <ul>${metricsHTML}</ul>
+
+            <h4>Dashboard Features</h4>
+            <ul>${featuresHTML}</ul>
+
+            <h4>Key Insights</h4>
+            <ul>${insightsHTML}</ul>
+
+            <h4>Tools Used</h4>
+            <ul>${toolsHTML}</ul>
+          `;
+
+          // Apply specific button modifications for Project 3
+          modalLiveLink.style.display = "none";
+          modalRepoLink.textContent = "View GitHub";
           
         } else {
           // Restore default modal layout for other projects
